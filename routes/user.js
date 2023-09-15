@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 router.get("/new", (req, res) => {
   try {
@@ -26,6 +26,7 @@ router.post("/create", async (req, res) => {
   try {
     const user = new userModel(req.body);
     await user.save();
+    req.session.email = req.body.email
     res.redirect("registered");
   } catch (error) {
     if (error.name === 'ValidationError') {
@@ -40,10 +41,26 @@ router.post("/create", async (req, res) => {
 
 router.get("/registered", (req, res) => {
   try {
+    if (!req.session.email) {
+      res.redirect("/login-message");
+    }
     res.render("user/registered");
   } catch (error) {
     console.log(error);
   }
 });
+
+router.get("/logout", (req, res) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error(err);
+      }
+      res.redirect("/logout-message");
+    })
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 module.exports = router
