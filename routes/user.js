@@ -7,9 +7,42 @@ router.use(express.urlencoded({ extended: true }));
 
 router.get("/", (req, res) => {
   try {
-    res.redirect("user/new");
+    res.redirect("user/login");
   } catch (error) {
     console.log(error);
+  }
+});
+
+router.get("/login", (req, res) => {
+  try {
+    const message = [];
+    const { email } = {};
+    res.render("user/login", { message, email })
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.post("/login-check", async (req, res) => {
+  try {
+    const email = req.body.email;
+    const user = await userModel.findOne({email: email});
+    if (!user) {
+      const message = "EmailまたはPasswordが誤っています。"
+      res.render("user/login", { email, message });
+    }
+    
+    const password = req.body.password;
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (isPasswordMatch) {
+      req.session.email = email;
+      res.redirect("registered");
+    } else {
+      const message = "EmailまたはPasswordが誤っています。"
+      res.render("user/login", { email, message });
+    }
+  } catch (error) {
+    res.status(500).send('サーバーエラーが発生しました。');
   }
 });
 
