@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/user");
+const bcrypt = require('bcrypt');
 
 router.use(express.urlencoded({ extended: true }));
 
@@ -39,6 +40,7 @@ router.get("/new", (req, res) => {
 router.post("/create", async (req, res) => {
   try {
     const user = new userModel(req.body);
+    user.password = await bcrypt.hash(user.password, 10);
     await user.save();
     req.session.email = req.body.email
     res.redirect("registered");
@@ -46,7 +48,7 @@ router.post("/create", async (req, res) => {
     if (error.name === 'ValidationError') {
       const { name, email, password } = req.body;
       const errors = Object.values(error.errors).map(err => err.message);
-      res.render("user/new", { name, email, password, errors });
+      res.render("user/new", { name, email, errors });
     } else {
       res.status(500).send('サーバーエラーが発生しました。');
     }
