@@ -5,16 +5,13 @@ const bcrypt = require('bcrypt');
 
 router.use(express.urlencoded({ extended: true }));
 
-router.get("/", (req, res) => {
-  try {
-    res.redirect("user/login");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
 router.get("/login", (req, res) => {
   try {
+    if (req.session.email) {
+      res.redirect("/");
+      return;
+    }
+
     const message = [];
     const { email } = {};
     res.render("user/login", { message, email })
@@ -36,7 +33,7 @@ router.post("/login-check", async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (isPasswordMatch) {
       req.session.email = email;
-      res.redirect("registered");
+      res.redirect("/");
     } else {
       const message = "EmailまたはPasswordが誤っています。"
       res.render("user/login", { email, message });
@@ -62,6 +59,11 @@ router.get("/index", async (req, res) => {
 
 router.get("/new", (req, res) => {
   try {
+    if (req.session.email) {
+      res.redirect("/");
+      return;
+    }
+
     const { name, email, password } = {};
     const errors = [];
     res.render("user/new", { name, email, password, errors });
@@ -76,7 +78,7 @@ router.post("/create", async (req, res) => {
     user.password = await bcrypt.hash(user.password, 10);
     await user.save();
     req.session.email = req.body.email
-    res.redirect("registered");
+    res.render("user/registered");
   } catch (error) {
     if (error.name === 'ValidationError') {
       const { name, email, password } = req.body;
@@ -88,19 +90,12 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.get("/registered", (req, res) => {
+router.get("/logout", (req, res) => {
   try {
     if (!req.session.email) {
       res.redirect("/login-message");
+      return;
     }
-    res.render("user/registered");
-  } catch (error) {
-    console.log(error);
-  }
-});
-
-router.get("/logout", (req, res) => {
-  try {
     req.session.destroy((err) => {
       if (err) {
         console.error(err);

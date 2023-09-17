@@ -19,7 +19,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     secure: false,
-    maxAge: 1000 * 60 * 1
+    maxAge: 1000 * 60 * 60
   } 
 }));
 
@@ -33,10 +33,14 @@ app.use(express.static("public"));
 
 //トップページ
 app.get("/", (req, res) => {
+  if (!req.session.email) {
+    res.redirect("/login-message");
+    return;
+  }
   res.render("index");
 });
 
-//セッション未登録ページ
+//ログインメッセージ
 app.get("/login-message", (req, res) => {
   res.render("login-message");
 });
@@ -51,7 +55,7 @@ app.get("/not-found", (req, res) => {
   res.render("not-found");
 });
 
-// 存在しないパスからリダイレクト
+// 存在しないパス
 app.use((req, res) => {
   res.redirect("/not-found");
 });
