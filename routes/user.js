@@ -12,6 +12,20 @@ router.get("/", (req, res) => {
   }
 });
 
+router.get("/index", async (req, res) => {
+  try {
+    if (!req.session.email) {
+      res.redirect("/login-message");
+      return;
+    }
+    const email = req.session.email;
+    const users = await userModel.find({email: email});
+    res.render("user/index", { users });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.get("/new", (req, res) => {
   try {
     const { name, email, password } = {};
@@ -61,6 +75,6 @@ router.get("/logout", (req, res) => {
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 module.exports = router
