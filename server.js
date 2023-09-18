@@ -6,10 +6,22 @@ const PORT = 3000;
 //データベース
 const mongoose = require("mongoose");
 mongoose.connect(
-  "mongodb+srv://konishi3:password@cluster0.uh1oigt.mongodb.net/?retryWrites=true&w=majority"
+  "mongodb+srv://konishi3:jkluiom,.@cluster0.uh1oigt.mongodb.net/?retryWrites=true&w=majority"
   )
   .then(() => console.log("データベース接続に成功しました。"))
   .catch((err) => console.log(err));
+
+//セッション
+const session = require('express-session');
+app.use(session({
+  secret: 'jkokmwijioo9w93jawenci', // 秘密鍵は任意のものに要変更
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    maxAge: 1000 * 60 * 60
+  } 
+}));
 
 //ルーティング
 const userRouter = require("./routes/user");
@@ -21,7 +33,21 @@ app.use(express.static("public"));
 
 //トップページ
 app.get("/", (req, res) => {
+  if (!req.session.email) {
+    res.redirect("/login-message");
+    return;
+  }
   res.render("index");
+});
+
+//ログインメッセージ
+app.get("/login-message", (req, res) => {
+  res.render("login-message");
+});
+
+//ログアウト完了ページ
+app.get("/logout-message", (req, res) => {
+  res.render("logout-message");
 });
 
 // 存在しないページ
@@ -29,7 +55,7 @@ app.get("/not-found", (req, res) => {
   res.render("not-found");
 });
 
-// 存在しないパスからリダイレクト
+// 存在しないパス
 app.use((req, res) => {
   res.redirect("/not-found");
 });
