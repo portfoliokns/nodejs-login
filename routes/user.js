@@ -115,7 +115,6 @@ router.post("/create",
   async (req, res) => {
     try {
       const errors = validationResult(req);
-      console.log(errors)
       if (!errors.isEmpty()) {
         const { name, email } = req.body;
         res.render("user/new", { name, email, errors: errors.array() });
@@ -131,7 +130,6 @@ router.post("/create",
       if (error.name === 'ValidationError') {
         const { name, email } = req.body;
         const errors = Object.values(error.errors).map(err => err.message);
-        console.log(error.errors)
         res.render("user/new", { name, email, errors });
       } else {
         res.status(500).send('サーバーエラーが発生しました。');

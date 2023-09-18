@@ -20,7 +20,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate(value){
-      console.log(value.length)
       if(value.length !== 60) throw new Error("パスワードの文字数が規格に合わないため、DBへの保存に失敗しました。");
     }
   }
