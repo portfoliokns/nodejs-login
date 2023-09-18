@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userModel = require("../models/user");
 const bcrypt = require('bcrypt');
+const { body, validationResult } = require('express-validator');
 
 router.use(express.urlencoded({ extended: true }));
 
@@ -72,23 +73,39 @@ router.get("/new", (req, res) => {
   }
 });
 
-router.post("/create", async (req, res) => {
-  try {
-    const user = new userModel(req.body);
-    user.password = await bcrypt.hash(user.password, 10);
-    await user.save();
-    req.session.email = req.body.email
-    res.render("user/registered");
-  } catch (error) {
-    if (error.name === 'ValidationError') {
-      const { name, email, password } = req.body;
-      const errors = Object.values(error.errors).map(err => err.message);
-      res.render("user/new", { name, email, errors });
-    } else {
-      res.status(500).send('サーバーエラーが発生しました。');
+router.post("/create",
+  [
+    body("name").trim().isLength({ max: 20 }).withMessage("ユーザー名は20文字以内で入力してください"),
+    body("email").trim().isLength({ max: 60 }).withMessage("メールアドレスは60文字以内で入力してください"),
+    body("password").trim().isLength({ min: 8 }).withMessage("パスワードは8文字以上で入力してください"),
+  ],
+  async (req, res) => {
+    try {
+      const errors = validationResult(req);
+      console.log(errors)
+      if (!errors.isEmpty()) {
+        const { name, email } = req.body;
+        res.render("user/new", { name, email, errors: errors.array() });
+        return;
+      }
+
+      const user = new userModel(req.body);
+      user.password = await bcrypt.hash(user.password, 10);
+      await user.save();
+      req.session.email = req.body.email
+      res.render("user/registered");
+    } catch (error) {
+      if (error.name === 'ValidationError') {
+        const { name, email } = req.body;
+        const errors = Object.values(error.errors).map(err => err.message);
+        console.log(error.errors)
+        res.render("user/new", { name, email, errors });
+      } else {
+        res.status(500).send('サーバーエラーが発生しました。');
+      }
     }
   }
-});
+);
 
 router.get("/logout", (req, res) => {
   try {
