@@ -9,10 +9,12 @@
 <body>
   <h2>Login</h2>
   <form action="login-check" method="POST">
-    <% if (message.length > 0) { %>
+    <% if (errors && errors.length > 0) { %>
       <div class="error">
         <ul>
-          <li><%= message %></li>
+          <% errors.forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }); %>
         </ul>
       </div>
     <% } %>
