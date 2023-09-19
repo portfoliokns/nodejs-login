@@ -5,8 +5,10 @@ const PORT = 3000;
 
 //データベース
 const mongoose = require("mongoose");
+const ID = process.env.MONGO_DB_ID;
+const Password = process.env.MONGO_DB_PASSWORD;
 mongoose.connect(
-  "mongodb+srv://konishi3:pass@cluster0.uh1oigt.mongodb.net/?retryWrites=true&w=majority"
+  `mongodb+srv://${ID}:${Password}@cluster0.uh1oigt.mongodb.net/?retryWrites=true&w=majority`
   )
   .then(() => console.log("データベース接続に成功しました。"))
   .catch((err) => console.log(err));
