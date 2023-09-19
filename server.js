@@ -6,7 +6,7 @@ const PORT = 3000;
 //データベース
 const mongoose = require("mongoose");
 mongoose.connect(
-  "mongodb+srv://konishi3:jkluiom,.@cluster0.uh1oigt.mongodb.net/?retryWrites=true&w=majority"
+  "mongodb+srv://konishi3:jkluiorty@cluster0.uh1oigt.mongodb.net/?retryWrites=true&w=majority"
   )
   .then(() => console.log("データベース接続に成功しました。"))
   .catch((err) => console.log(err));
