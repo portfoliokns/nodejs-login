@@ -1,3 +1,35 @@
 * {
+  
+}
+
+body {
   background-color: white;
 }
+
+header {
+  width: 100%;
+  height: 70px;
+  background-color: #679cbb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  width: 100%;
+  background-color: azure;
+}
+
+footer {
+  width: 100%;
+  height: 70px;
+  background-color: #e6e7d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer a {
+  text-decoration: none;
+}
+
