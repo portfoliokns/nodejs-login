@@ -39,22 +39,30 @@ app.get("/", (req, res) => {
     res.redirect("/login-message");
     return;
   }
-  res.render("index");
+  res.render('layout', {
+    partialTemplate: 'index'
+  });
 });
 
 //ログインメッセージ
 app.get("/login-message", (req, res) => {
-  res.render("login-message");
+  res.render('layout', {
+    partialTemplate: 'login-message'
+  });
 });
 
 //ログアウト完了ページ
 app.get("/logout-message", (req, res) => {
-  res.render("logout-message");
+  res.render('layout', {
+    partialTemplate: 'logout-message'
+  });
 });
 
 // 存在しないページ
 app.get("/not-found", (req, res) => {
-  res.render("not-found");
+  res.render('layout', {
+    partialTemplate: 'not-found'
+  });
 });
 
 // 存在しないパス
