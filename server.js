@@ -40,28 +40,28 @@ app.get("/", (req, res) => {
     return;
   }
   res.render('public/layout', {
-    partialTemplate: '../index'
+    partialTemplate: 'index'
   });
 });
 
 //ログインメッセージ
 app.get("/login-message", (req, res) => {
   res.render('public/layout', {
-    partialTemplate: '../login-message'
+    partialTemplate: 'login-message'
   });
 });
 
 //ログアウト完了ページ
 app.get("/logout-message", (req, res) => {
   res.render('public/layout', {
-    partialTemplate: '../logout-message'
+    partialTemplate: 'logout-message'
   });
 });
 
 // 存在しないページ
 app.get("/not-found", (req, res) => {
   res.render('public/layout', {
-    partialTemplate: '../not-found'
+    partialTemplate: 'not-found'
   });
 });
 

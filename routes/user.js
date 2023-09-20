@@ -16,7 +16,7 @@ router.get("/login", (req, res) => {
     const errors = [];
     const { email } = {};
     res.render('public/layout', {
-      partialTemplate: '../user/login',
+      partialTemplate: 'user/login',
       errors, email
     });
   } catch (error) {
@@ -44,7 +44,7 @@ router.post(
       if (!errors.isEmpty()) {
         const { email } = req.body;
         res.render('public/layout', {
-          partialTemplate: '../user/login',
+          partialTemplate: 'user/login',
           email, errors: errors.array()
         });
         return;
@@ -61,7 +61,7 @@ router.post(
         const message = "EmailまたはPasswordが誤っています.";
         const loginErrors = [...errors.array(), { msg: message }];
         res.render('public/layout', {
-          partialTemplate: '../user/login',
+          partialTemplate: 'user/login',
           email, errors: loginErrors
         });
       }
@@ -80,7 +80,7 @@ router.get("/index", async (req, res) => {
     const email = req.session.email;
     const users = await userModel.find({email: email});
     res.render('public/layout', {
-      partialTemplate: '../user/index',
+      partialTemplate: 'user/index',
       users
     });
   } catch (error) {
@@ -98,7 +98,7 @@ router.get("/new", (req, res) => {
     const { name, email, password } = {};
     const errors = [];
     res.render('public/layout', {
-      partialTemplate: '../user/new',
+      partialTemplate: 'user/new',
       name, email, password, errors
     });
   } catch (error) {
@@ -133,7 +133,7 @@ router.post("/create",
       if (!errors.isEmpty()) {
         const { name, email } = req.body;
         res.render('public/layout', {
-          partialTemplate: '../user/new',
+          partialTemplate: 'user/new',
           name, email, errors: errors.array()
         });
         return;
@@ -144,14 +144,14 @@ router.post("/create",
       await user.save();
       req.session.email = req.body.email
       res.render('public/layout', {
-        partialTemplate: '../user/registered'
+        partialTemplate: 'user/registered'
       });
     } catch (error) {
       if (error.name === 'ValidationError') {
         const { name, email } = req.body;
         const errors = Object.values(error.errors).map(err => err.message);
         res.render('public/layout', {
-          partialTemplate: '../user/new',
+          partialTemplate: 'user/new',
           name, email, errors
         });
       } else {
