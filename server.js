@@ -39,29 +39,29 @@ app.get("/", (req, res) => {
     res.redirect("/login-message");
     return;
   }
-  res.render('layout', {
-    partialTemplate: 'index'
+  res.render('public/layout', {
+    partialTemplate: '../index'
   });
 });
 
 //ログインメッセージ
 app.get("/login-message", (req, res) => {
-  res.render('layout', {
-    partialTemplate: 'login-message'
+  res.render('public/layout', {
+    partialTemplate: '../login-message'
   });
 });
 
 //ログアウト完了ページ
 app.get("/logout-message", (req, res) => {
-  res.render('layout', {
-    partialTemplate: 'logout-message'
+  res.render('public/layout', {
+    partialTemplate: '../logout-message'
   });
 });
 
 // 存在しないページ
 app.get("/not-found", (req, res) => {
-  res.render('layout', {
-    partialTemplate: 'not-found'
+  res.render('public/layout', {
+    partialTemplate: '../not-found'
   });
 });
 
