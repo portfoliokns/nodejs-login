@@ -1,7 +1,4 @@
-<%- include('../layout') %>
-
-<h2>Login</h2>
-<form action="login-check" method="POST">
+<form action="login-check" method="POST"  class="box">
   <% if (errors && errors.length > 0) { %>
     <div class="error">
       <ul>
@@ -11,12 +8,14 @@
       </ul>
     </div>
   <% } %>
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" value="<%= email || '' %>" required>
-  <br>
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" value="" required>
-  <br>
-  <button type="submit">Login</button>
+  <div class="form-box">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="<%= email || '' %>" required>
+  </div>
+  <div class="form-box">
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" value="" required>
+  </div>
+  <button type="submit" class="button">ログイン</button>
 </form>
-<a href="/user/new">ユーザー登録</a><br>
+<a href="/user/new">新規登録はこちら</a>

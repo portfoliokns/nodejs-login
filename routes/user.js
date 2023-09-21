@@ -15,7 +15,11 @@ router.get("/login", (req, res) => {
 
     const errors = [];
     const { email } = {};
-    res.render("user/login", { errors, email })
+    res.render('public/layout', {
+      partialTemplate: 'user/login',
+      partialCss: 'user/login.css',
+      errors, email
+    });
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +44,11 @@ router.post(
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const { email } = req.body;
-        res.render("user/login", { email, errors: errors.array() });
+        res.render('public/layout', {
+          partialTemplate: 'user/login',
+          partialCss: 'user/login.css',
+          email, errors: errors.array()
+        });
         return;
       }
 
@@ -54,7 +62,11 @@ router.post(
       } else {
         const message = "EmailまたはPasswordが誤っています.";
         const loginErrors = [...errors.array(), { msg: message }];
-        res.render("user/login", { email, errors: loginErrors });
+        res.render('public/layout', {
+          partialTemplate: 'user/login',
+          partialCss: 'user/login.css',
+          email, errors: loginErrors
+        });
       }
     } catch (error) {
       res.status(500).send('サーバーエラーが発生しました。');
@@ -70,7 +82,11 @@ router.get("/index", async (req, res) => {
     }
     const email = req.session.email;
     const users = await userModel.find({email: email});
-    res.render("user/index", { users });
+    res.render('public/layout', {
+      partialTemplate: 'user/index',
+      partialCss: 'user/index.css',
+      users
+    });
   } catch (error) {
     console.error(error);
   }
@@ -85,7 +101,11 @@ router.get("/new", (req, res) => {
 
     const { name, email, password } = {};
     const errors = [];
-    res.render("user/new", { name, email, password, errors });
+    res.render('public/layout', {
+      partialTemplate: 'user/new',
+      partialCss: 'user/new.css',
+      name, email, password, errors
+    });
   } catch (error) {
     console.log(error);
   }
@@ -117,7 +137,11 @@ router.post("/create",
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         const { name, email } = req.body;
-        res.render("user/new", { name, email, errors: errors.array() });
+        res.render('public/layout', {
+          partialTemplate: 'user/new',
+          partialCss: 'user/new.css',
+          name, email, errors: errors.array()
+        });
         return;
       }
 
@@ -125,12 +149,19 @@ router.post("/create",
       user.password = await bcrypt.hash(user.password, 10);
       await user.save();
       req.session.email = req.body.email
-      res.render("user/registered");
+      res.render('public/layout', {
+        partialTemplate: 'user/registered',
+        partialCss: 'user/registered.css'
+      });
     } catch (error) {
       if (error.name === 'ValidationError') {
         const { name, email } = req.body;
         const errors = Object.values(error.errors).map(err => err.message);
-        res.render("user/new", { name, email, errors });
+        res.render('public/layout', {
+          partialTemplate: 'user/new',
+          partialCss: 'user/new.css',
+          name, email, errors
+        });
       } else {
         res.status(500).send('サーバーエラーが発生しました。');
       }

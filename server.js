@@ -39,22 +39,34 @@ app.get("/", (req, res) => {
     res.redirect("/login-message");
     return;
   }
-  res.render("index");
+  res.render('public/layout', {
+    partialTemplate: 'index',
+    partialCss: 'user/index.css'
+  });
 });
 
 //ログインメッセージ
 app.get("/login-message", (req, res) => {
-  res.render("login-message");
+  res.render('public/layout', {
+    partialTemplate: 'login-message',
+    partialCss: 'login-message.css'
+  });
 });
 
 //ログアウト完了ページ
 app.get("/logout-message", (req, res) => {
-  res.render("logout-message");
+  res.render('public/layout', {
+    partialTemplate: 'logout-message',
+    partialCss: 'logout-message.css'
+  });
 });
 
 // 存在しないページ
 app.get("/not-found", (req, res) => {
-  res.render("not-found");
+  res.render('public/layout', {
+    partialTemplate: 'not-found',
+    partialCss: 'not-found.css'
+  });
 });
 
 // 存在しないパス

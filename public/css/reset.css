@@ -1,0 +1,67 @@
+/* Reset CSS */
+
+/* リストをリセット */
+ul, ol, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* リンクのデフォルトスタイルをリセット */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ヘッダーのマージンをリセット */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+/* ボタン要素のデフォルトスタイルをリセット */
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* インプットフィールド要素のデフォルトスタイルをリセット */
+input, textarea, select {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+/* 画像のマージンをリセット */
+img {
+  margin: 0;
+  padding: 0;
+}
+
+/* ページ全体の余白をリセット */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* 前後要素の余白をリセット */
+/* （ここではdiv要素を例としていますが、必要に応じて他の要素にも適用できます） */
+div::before, div::after {
+  content: "";
+  display: table;
+}
+
+div::after {
+  clear: both;
+}
+
+/* ボックスモデルをリセット */
+/* （必要に応じてボックスモデルのスタイルを再定義してください） */
+* {
+  box-sizing: border-box;
+}

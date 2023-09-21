@@ -1,0 +1,11 @@
+.box {
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-box {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

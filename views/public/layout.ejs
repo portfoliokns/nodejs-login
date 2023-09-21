@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/<%= partialCss %>">
+  <title>Document</title>
+</head>
+<body>
+  <header>
+    ログイン確認ソース
+  </header>
+  <div class="main">
+    <%- include(`../${partialTemplate}`) %>
+  </div>
+  <footer>
+    <a href="https://github.com/portfoliokns/nodejs-login">GitHub</a>
+  </footer>
+</body>
+</html>
