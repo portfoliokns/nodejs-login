@@ -1,21 +1,3 @@
-input {
-  border: 1px black solid;
-  border-radius: 3px;
-}
-
-.error {
-  margin: 10px;
-  color: red;
-  font-weight: 600;
-}
-
-.button {
-  padding: 5px;
-  margin: 5px;
-  border: 1px solid;
-  border-radius: 5px;
-}
-
 body {
   background-color: white;
 }
@@ -51,3 +33,31 @@ footer a {
   text-decoration: none;
 }
 
+input {
+  border: 1px black solid;
+  border-radius: 3px;
+}
+
+.error {
+  margin: 10px;
+  color: red;
+  font-weight: 600;
+}
+
+.button {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.announce{
+  padding: 5px;
+  margin: 5px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
