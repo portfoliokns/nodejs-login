@@ -81,11 +81,11 @@ router.get("/index", async (req, res) => {
       return;
     }
     const email = req.session.email;
-    const users = await userModel.find({email: email});
+    const user = await userModel.findOne({email: email});
     res.render('public/layout', {
       partialTemplate: 'user/index',
       partialCss: 'user/index.css',
-      users
+      user
     });
   } catch (error) {
     console.error(error);

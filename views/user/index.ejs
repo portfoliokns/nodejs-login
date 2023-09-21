@@ -1,9 +1,13 @@
 <div class="announce">ここではユーザーの登録情報を確認できます</div>
-<% users.forEach(user => { %>
-  <li>
-    <p>ユーザー名: <%= user.name %></p>
-    <p>Email: <%= user.email %></p>
-  </li>
-<% }); %>
+  <div class="user-lists">
+    <div class="user-name-lists">
+      <div>ユーザー名:</div>
+      <div>Email:</div>
+    </div>
+    <div class="user-data-lists">
+      <div><%= user.name %></div>
+      <div><%= user.email %></div>
+    </div>
+  </div>
 <a href="/">トップへ戻るにはこちら</a>
 <a href="/user/logout">ログアウトはこちら</a>

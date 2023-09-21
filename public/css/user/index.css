@@ -1,3 +1,19 @@
 .box {
   flex-direction: column;
 }
+
+.user-lists {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px;
+}
+
+.user-name-lists {
+  text-align: right;
+}
+
+.user-data-lists {
+  text-align: left;
+  margin-left: 15px;
+}
