@@ -120,7 +120,14 @@ router.post("/create",
     body("email")
       .trim()
       .notEmpty().withMessage("メールアドレスを入力してください")
-      .isLength({ max: 60 }).withMessage("メールアドレスは60文字以内で入力してください"),
+      .isLength({ max: 60 }).withMessage("メールアドレスは60文字以内で入力してください")
+      .custom(async (value, {req}) => {
+        const user = await userModel.findOne({email: value});
+        if (user) {
+          throw new Error("このメールアドレスは登録できません")
+        }
+        return true;
+      }),
     body("password")
       .trim()
       .custom((value, {req}) => {
