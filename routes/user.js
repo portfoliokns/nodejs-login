@@ -17,6 +17,7 @@ router.get("/login", (req, res) => {
     const { email } = {};
     res.render('public/layout', {
       partialTemplate: 'user/login',
+      partialCss: 'user/login.css',
       errors, email
     });
   } catch (error) {
@@ -45,6 +46,7 @@ router.post(
         const { email } = req.body;
         res.render('public/layout', {
           partialTemplate: 'user/login',
+          partialCss: 'user/login.css',
           email, errors: errors.array()
         });
         return;
@@ -62,6 +64,7 @@ router.post(
         const loginErrors = [...errors.array(), { msg: message }];
         res.render('public/layout', {
           partialTemplate: 'user/login',
+          partialCss: 'user/login.css',
           email, errors: loginErrors
         });
       }
@@ -81,6 +84,7 @@ router.get("/index", async (req, res) => {
     const users = await userModel.find({email: email});
     res.render('public/layout', {
       partialTemplate: 'user/index',
+      partialCss: 'user/index.css',
       users
     });
   } catch (error) {
@@ -99,6 +103,7 @@ router.get("/new", (req, res) => {
     const errors = [];
     res.render('public/layout', {
       partialTemplate: 'user/new',
+      partialCss: 'user/new.css',
       name, email, password, errors
     });
   } catch (error) {
@@ -134,6 +139,7 @@ router.post("/create",
         const { name, email } = req.body;
         res.render('public/layout', {
           partialTemplate: 'user/new',
+          partialCss: 'user/new.css',
           name, email, errors: errors.array()
         });
         return;
@@ -144,7 +150,8 @@ router.post("/create",
       await user.save();
       req.session.email = req.body.email
       res.render('public/layout', {
-        partialTemplate: 'user/registered'
+        partialTemplate: 'user/registered',
+        partialCss: 'user/registered.css'
       });
     } catch (error) {
       if (error.name === 'ValidationError') {
@@ -152,6 +159,7 @@ router.post("/create",
         const errors = Object.values(error.errors).map(err => err.message);
         res.render('public/layout', {
           partialTemplate: 'user/new',
+          partialCss: 'user/new.css',
           name, email, errors
         });
       } else {

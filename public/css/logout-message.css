@@ -1,0 +1,11 @@
+.announce{
+  padding: 5px;
+  margin: 5px;
+  border-bottom: 3px red double;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
