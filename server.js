@@ -27,7 +27,9 @@ app.use(session({
 
 //ルーティング
 const userRouter = require("./routes/user");
+const apiRouter = require("./routes/api");
 app.use("/user", userRouter);
+app.use("/api", apiRouter);
 
 //テンプレートエンジン
 app.set("view engine", "ejs");
