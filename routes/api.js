@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userModel = require("../models/user");
-const api_key = "890890890";
+const api_key = process.env.NODEJS_API_KEY;
 
 router.use(express.json());
 
